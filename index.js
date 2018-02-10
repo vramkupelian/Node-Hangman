@@ -1,8 +1,8 @@
 var request = require("request");
 var inquirer = require("inquirer");
 var npmPrompt = require("prompt");
-var word = require("./word.js");
-var letter = require("./letter.js");
+var Word = require("./Word.js");
+var Letter = require("./Letter.js");
 
 var guessesLeft = 15;
 var lettersGuessed = "";
@@ -26,11 +26,11 @@ function chooseWord (){
 }
 chooseWord();
 
-var newTheWord = new word.Word(theWord);
+var newTheWord = new Word(theWord);
 
 function timeToGuess(){
-	console.log(newTheWord.toString());
-	if (newTheWord.guesses.length >= maxGuesses){
+	// console.log(newTheWord.Word.stringIt());
+	if (newTheWord.guesses.length >= guessesLeft){
 		console.log('Game over.');
 	return; //Game over
 	}
@@ -44,9 +44,9 @@ function timeToGuess(){
 				}
 		}]).then(function(letterInput){ // Control
 				var letter = letterInput.letter; 
-				newTheWord.letterMatcher(letter); //Check
+				newTheWord.Word.letterMatcher(letter); //Check
 					if(newTheWord.Finished()){ 
-					console.log('Yes! It was ' + newTheWord.stringIt() + '!');
+					console.log('Good job! The answer is: ' + newTheWord.Word.stringIt() + '!');
                     //Win
                     return; 
 					}

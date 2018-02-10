@@ -1,12 +1,12 @@
-var letterPg = require("./letter.js");
+var Letter = require("./Letter.js");
 
 function Word(stringValue){
     this.lettersArray = [];
     this.stringValue = stringValue;
     
     for(var i=0; i<this.stringValue.length; i++){
-        this.lettersArray.push(new letterPg.Letter(this.stringValue[i]));
-        console.log(lettersArray);
+        this.lettersArray.push(new Letter(this.stringValue[i]));
+    
     }
 
     function Finished(){
@@ -22,15 +22,15 @@ function Word(stringValue){
     
     this.guesses = "";
 
-    function letterMatcher(Letter){
+    function letterMatcher(lttr){
 
-        if(this.guesses.indexOf(Letter) != -1){
+        if(this.guesses.indexOf(lttr) != -1){
             return "Copy";
         }
         
-        this.guesses +=Letter;
+        this.guesses +=lttr;
         for(var i=0; i<this.lettersArray.length; i++){
-            if(this.lettersArray[i].stringValue === Letter){
+            if(this.lettersArray[i].stringValue === lttr){
                 this.lettersArray[i].show = true;
             }
         }
