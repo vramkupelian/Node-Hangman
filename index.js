@@ -27,9 +27,9 @@ function chooseWord (){
 chooseWord();
 
 var newTheWord = new Word(theWord);
-
+// console.log(newTheWord);
 function timeToGuess(){
-	// console.log(newTheWord.Word.stringIt());
+	// console.log(newTheWord.stringIt());
 	if (newTheWord.guesses.length >= guessesLeft){
 		console.log('Game over.');
 	return; //Game over
@@ -44,7 +44,7 @@ function timeToGuess(){
 				}
 		}]).then(function(letterInput){ // Control
 				var letter = letterInput.letter; 
-				newTheWord.Word.letterMatcher(letter); //Check
+				newTheWord.letterMatcher(letter); //Check
 					if(newTheWord.Finished()){ 
 					console.log('Good job! The answer is: ' + newTheWord.Word.stringIt() + '!');
                     //Win
@@ -52,10 +52,9 @@ function timeToGuess(){
 					}
                 console.log('-------------------\n'); 
                 // Next guess.
-				console.log('You have ' + (maxGuesses - newTheWord.guesses.length) + ' guesses left.')
+				console.log('You have ' + (guessesLeft - newTheWord.guesses.length) + ' guesses left.')
 				timeToGuess(); //Recursive call
 				}
   );
 }
-
 timeToGuess(); //Start Game

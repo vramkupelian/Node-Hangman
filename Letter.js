@@ -12,13 +12,28 @@ function Letter (underlyingCharacter){
     }
   
     //prints either letter or "_ " depending on guess.
-    this.letterPrint = function() {
-        if (this.show) {
-            return this.value;
-        }else{
-            return "_ ";
-        }
-    }
+    // this.letterPrint = function() {
+    //     if (this.show) {
+    //         return this.value;
+    //     }else{
+    //         return "_ ";
+    //     }
+    // }
 }   
+
+Letter.prototype.letterDisplay = function(){
+    if (this.underlyingCharacter == ' ') {
+        this.show = true;
+    }
+}
+
+
+Letter.prototype.letterPrint = function() {
+    if (this.show) {
+        return this.underlyingCharacter;
+    }else{
+        return "_ ";
+    }
+}
 
 module.exports = Letter;
