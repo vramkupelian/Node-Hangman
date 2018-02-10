@@ -6,7 +6,6 @@ function Word(stringValue){
     
     for(var i=0; i<this.stringValue.length; i++){
         this.lettersArray.push(new Letter(this.stringValue[i]));
-    
     }
 
     // function Finished(){
@@ -51,7 +50,8 @@ function Word(stringValue){
 Word.prototype.letterMatcher = function (lttr){
 
     if(this.guesses.indexOf(lttr) != -1){
-        return "Copy";
+        console.log("Copy");
+        // return "Copy";
     }
     
     this.guesses +=lttr;
@@ -79,6 +79,7 @@ Word.prototype.stringIt = function (){
         printout+= this.lettersArray[i].letterPrint();
     }
     return printout;
+    console.log(printout);
 }
 
 

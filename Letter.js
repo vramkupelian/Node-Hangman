@@ -5,11 +5,11 @@ function Letter (underlyingCharacter){
     this.hasBeenGuessed = false;  
     
     //Will show space if in word
-    this.letterDisplay = function(){
-        if (this.underlyingCharacter == ' ') {
-            this.show = true;
-        }
-    }
+    // this.letterDisplay = function(){
+    //     if (this.underlyingCharacter == ' ') {
+    //         this.show = true;
+    //     }
+    // }
   
     //prints either letter or "_ " depending on guess.
     // this.letterPrint = function() {
@@ -30,9 +30,11 @@ Letter.prototype.letterDisplay = function(){
 
 Letter.prototype.letterPrint = function() {
     if (this.show) {
+        console.log(this.underlyingCharacter); 
         return this.underlyingCharacter;
     }else{
-        return "_ ";
+       console.log("_ ");
+       return "_ ";
     }
 }
 
