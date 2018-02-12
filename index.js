@@ -4,57 +4,47 @@ var npmPrompt = require("prompt");
 var Word = require("./Word.js");
 var Letter = require("./Letter.js");
 
-var guessesLeft = 15;
-var lettersGuessed = "";
-
-//List of possible words: US presidents , no repeats i.e. Bush comes up once
 var wordPool = ["jefferson","washington","obama","truman","eisenhower","lincoln","jackson","trump","bush","clinton","reagan",
 "nixon","carter","ford","johnson","roosevelt","hoover","coolidge",
 "harding","wilson","taft","mckinley","cleveland","harrison",
 "arthur","garfield","hayes","grant","buchanan","pierce","fillmore",
-"taylor","polk","tyler","vanburen","adams","monroe","madison",] 
-//38 names
+"taylor","polk","tyler","van buren","adams","monroe","madison",] 
 
-
-// This will randomly choose the word for each game
 var theWord;
-var splitWord;
-var splitLength;
 
 function chooseWord (){
     theWord = wordPool[Math.floor(Math.random() * wordPool.length)];      
 }
 chooseWord();
 
-var newTheWord = new Word(theWord);
-// console.log(newTheWord);
-function timeToGuess(){
-	// console.log(newTheWord.stringIt());
-	if (newTheWord.guesses.length >= guessesLeft){
-		console.log('Game over.');
+var theNewWord = new Word.Word(theWord);
+var guessesLeft = 15;
+
+function guess(){
+	console.log(theNewWord.toString());
+	if (theNewWord.guessesMade.length >= guessesLeft){
+		console.log('Game Over. You ran out of guesses. The word was "'+ theWord +'". Try Again.');
 	return; //Game over
 	}
 	inquirer.prompt([{
 		name: 'letter',
 		type: 'text',
 		message: 'Guess a letter:',
-		validate: function(str){ //validate to make sure input is as needed
+		validate: function(string){
 			var regEx = new RegExp("^[a-zA-Z\s]{1,1}$");
-			return regEx.test(str);
+			return regEx.test(string);
+		}
+		}]).then(function(letterInput){ 
+			var letter = letterInput.letter; 
+			theNewWord.checkLetter(letter); 
+				if(theNewWord.Finished()){ 
+					console.log('Well done! It was "' + theNewWord.toString() + '" all along!');
+					return; 
 				}
-		}]).then(function(letterInput){ // Control
-				var letter = letterInput.letter; 
-				newTheWord.letterMatcher(letter); //Check
-					if(newTheWord.Finished()){ 
-					console.log('Good job! The answer is: ' + newTheWord.Word.stringIt() + '!');
-                    //Win
-                    return; 
-					}
-                console.log('-------------------\n'); 
-                // Next guess.
-				console.log('You have ' + (guessesLeft - newTheWord.guesses.length) + ' guesses left.')
-				timeToGuess(); //Recursive call
-				}
-  );
+			console.log('================\n'); //Next guess.
+			console.log('Choose wisely. You have ' + (guessesLeft - theNewWord.guessesMade.length) + ' guesses left.')
+			guess(); //Recursive call
+		    }
+        );
 }
-timeToGuess(); //Start Game
+guess(); //Start Game

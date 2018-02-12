@@ -1,86 +1,45 @@
 var Letter = require("./Letter.js");
 
 function Word(stringValue){
-    this.lettersArray = [];
-    this.stringValue = stringValue;
-    
-    for(var i=0; i<this.stringValue.length; i++){
-        this.lettersArray.push(new Letter(this.stringValue[i]));
-    }
-
-    // function Finished(){
-    //     for(var i=0; i< this.lettersArray.length;i++){
-    //         if(!this.lettersArray[i].show){
-    //             return false;
-    //         }
-    //         else{
-    //             return true;
-    //         }
-    //     }
-    // }
-    
-    this.guesses = "";
-
-    // function letterMatcher(lttr){
-
-    //     if(this.guesses.indexOf(lttr) != -1){
-    //         return "Copy";
-    //     }
-        
-    //     this.guesses +=lttr;
-    //     for(var i=0; i<this.lettersArray.length; i++){
-    //         if(this.lettersArray[i].stringValue === lttr){
-    //             this.lettersArray[i].show = true;
-    //         }
-    //     }
-
-    // }; 
-
-    // function stringIt(){
-    //     var printout = "";
-    //     for(var i=0; i<lettersArray.length; i++){
-    //         printout+= this.lettersArray[i].letterPrint();
-    //     }
-    //     return printout;
-    // }
-
-
+	this.stringValue = stringValue;
+	this.lettersArray = [];
+    this.guessesMade = "";
+    //word into array
+	for(var i = 0; i < this.stringValue.length; i++) {
+		this.lettersArray.push(new Letter.Letter(this.stringValue[i]));
+	}
 };
 
-Word.prototype.letterMatcher = function (lttr){
-
-    if(this.guesses.indexOf(lttr) != -1){
-        console.log("Copy");
-        // return "Copy";
-    }
-    
-    this.guesses +=lttr;
-    for(var i=0; i<this.lettersArray.length; i++){
-        if(this.lettersArray[i].stringValue === lttr){
-            this.lettersArray[i].show = true;
-        }
-    }
-
-}; 
-
-Word.prototype.Finished = function (){
-    for(var i=0; i< this.lettersArray.length;i++){
+Word.prototype.Finished = function(){
+	for(var i = 0; i < this.lettersArray.length; i++){
         if(!this.lettersArray[i].show){
-            return false;
+          return false;  
         }
-        else{
-            return true;
-        }
-    }
-}
-Word.prototype.stringIt = function (){
-    var printout = "";
-    for(var i=0; i<lettersArray.length; i++){
-        printout+= this.lettersArray[i].letterPrint();
-    }
-    return printout;
-    console.log(printout);
+	}
+	return true;
 }
 
+Word.prototype.checkLetter = function(letter){
+	var lowercaseLetter = letter.toLowerCase();
+	if (this.guessesMade.indexOf(lowercaseLetter) != -1) {
+        console.log("Already guessed this letter.");
+        return;
+	} 
+    this.guessesMade += lowercaseLetter; 
+    //Records guess
+	for(var i=0; i<this.lettersArray.length;i++){
+		if(this.lettersArray[i].theLetter.toLowerCase() == lowercaseLetter){
+		this.lettersArray[i].show = true;
+		}
+	}
+};
 
-module.exports = Word;
+Word.prototype.toString = function(){
+  var printout = "";
+  for(var i=0; i<this.lettersArray.length; i++){
+    printout += this.lettersArray[i].printInfo();
+  }
+  return printout;
+}
+
+exports.Word = Word;
